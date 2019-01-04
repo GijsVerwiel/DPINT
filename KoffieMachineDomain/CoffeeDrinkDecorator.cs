@@ -12,7 +12,7 @@ namespace KoffieMachineDomain
 
         public CoffeeDrinkDecorator(IDrink drink, Strength drinkStrength ) : base(drink)
         {
-            base.Name = "Koffie";
+            base.Name = "Coffee";
             this._drinkStrength = drinkStrength;
         }
 

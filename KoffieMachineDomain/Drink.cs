@@ -17,7 +17,6 @@ namespace KoffieMachineDomain
             {
                 return _drinkStrength;
             }
-
             set
             {
                 _drinkStrength = value;

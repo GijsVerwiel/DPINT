@@ -21,7 +21,6 @@ namespace KoffieMachineDomain
             {
                 return _drink.DrinkStrength;
             }
-
             set
             {
                 _drink.DrinkStrength = value;
@@ -34,7 +33,6 @@ namespace KoffieMachineDomain
             {
                 return _drink.Name;
             }
-
             set
             {
                 _drink.Name = value;
