@@ -15,18 +15,6 @@ namespace KoffieMachineDomain
             this._drink = drink;
         }
 
-        public Strength DrinkStrength
-        {
-            get
-            {
-                return _drink.DrinkStrength;
-            }
-            set
-            {
-                _drink.DrinkStrength = value;
-            }
-        }
-
         public string Name
         {
             get

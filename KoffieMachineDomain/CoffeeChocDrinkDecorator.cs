@@ -1,31 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace KoffieMachineDomain
 {
-    public class CoffeeDrinkDecorator : DrinkDecorator
+    public class CoffeeChocDrinkDecorator : DrinkDecorator
     {
         private Strength _drinkStrength;
-
-        public CoffeeDrinkDecorator(IDrink drink, Strength drinkStrength ) : base(drink)
+        public CoffeeChocDrinkDecorator(IDrink drink, Strength drinkStrength) : base(drink)
         {
-            Name = "Coffee";
+            drink.Name = "Coffee Choc";
             _drinkStrength = drinkStrength;
         }
 
         public override double GetPrice()
         {
-            return base.GetPrice();
+            return base.GetPrice() + 0.9;
         }
 
         public override void LogDrinkMaking(ICollection<string> log)
         {
             base.LogDrinkMaking(log);
             log.Add($"Setting coffee strength to {_drinkStrength}.");
-            log.Add("Filling with coffee...");
+            log.Add("Adding a little whiskey...");
+            log.Add("Adding cream...");
         }
     }
 }

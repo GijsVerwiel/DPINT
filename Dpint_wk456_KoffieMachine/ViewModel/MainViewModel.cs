@@ -80,6 +80,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             if (_selectedDrink != null && RemainingPriceToPay == 0)
             {
                 _selectedDrink.LogDrinkMaking(LogText);
+                LogText.Add($"Finished making {_selectedDrink.Name}");
                 LogText.Add("------------------");
                 _selectedDrink = null;
             }
@@ -148,8 +149,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         public ICommand DrinkCommand => new RelayCommand<string>((drinkName) =>
         {
             _selectedDrink = null;
-
-            if (drinkName == "Coffee")
+            if (drinkName == DrinkFactory.CAPUCCINO || drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.COFFEE_CHOC || drinkName == DrinkFactory.IRISH_COFFEE || drinkName == DrinkFactory.SPANISH_COFFEE || drinkName == DrinkFactory.ITALIAN_COFFEE)               
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -165,7 +165,8 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
                 RaisePropertyChanged(() => RemainingPriceToPay);
                 RaisePropertyChanged(() => SelectedDrinkName);
                 RaisePropertyChanged(() => SelectedDrinkPrice);
-            } else
+            }
+            else
             {
                 LogText.Add($"Could not make {drinkName}, recipe not found.");
             }
@@ -173,9 +174,8 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 
         public ICommand DrinkWithSugarCommand => new RelayCommand<string>((drinkName) =>
         {
-            
-            RemainingPriceToPay = 0;
-            if (drinkName == "Coffee")
+            //RemainingPriceToPay = 0;
+            if (drinkName == DrinkFactory.CAPUCCINO || drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.IRISH_COFFEE || drinkName == DrinkFactory.ITALIAN_COFFEE || drinkName == DrinkFactory.SPANISH_COFFEE)
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -184,21 +184,32 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
                 _selectedDrink = _factory.create(drinkName);
             }
 
-            _factory.addSugar(_selectedDrink, SugarAmount);
+            _selectedDrink = _factory.addSugar(_selectedDrink, SugarAmount);
 
             if (_selectedDrink != null)
             {
                 RemainingPriceToPay = _selectedDrink.GetPrice() + SugarDrinkDecorator.SugarPrice;
-                LogText.Add($"Selected {_selectedDrink.Name} with sugar, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
+                if (_selectedDrink.Name == DrinkFactory.CAPUCCINO || _selectedDrink.Name == DrinkFactory.ESPRESSO || _selectedDrink.Name == DrinkFactory.COFFEE)
+                {
+                    LogText.Add($"Selected {_selectedDrink.Name} with sugar, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
+                }
+                else
+                {
+                    LogText.Add($"Selected {_selectedDrink.Name}, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
+                }
                 RaisePropertyChanged(() => RemainingPriceToPay);
                 RaisePropertyChanged(() => SelectedDrinkName);
                 RaisePropertyChanged(() => SelectedDrinkPrice);
+            }
+            else
+            {
+                LogText.Add($"Could not make {drinkName}, recipe not found.");
             }
         });
 
         public ICommand DrinkWithMilkCommand => new RelayCommand<string>((drinkName) =>
         {
-            if (drinkName == "Coffee")
+            if (drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.CAPUCCINO)
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -207,7 +218,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
                 _selectedDrink = _factory.create(drinkName);
             }
 
-            _factory.addMilk(_selectedDrink, MilkAmount);
+            _selectedDrink = _factory.addMilk(_selectedDrink, MilkAmount);
 
             if (_selectedDrink != null)
             {
@@ -217,13 +228,17 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
                 RaisePropertyChanged(() => SelectedDrinkName);
                 RaisePropertyChanged(() => SelectedDrinkPrice);
             }
+            else
+            {
+                LogText.Add($"Could not make {drinkName}, recipe not found.");
+            }
         });
 
         public ICommand DrinkWithSugarAndMilkCommand => new RelayCommand<string>((drinkName) =>
         {
             _selectedDrink = null;
             RemainingPriceToPay = 0;
-            if (drinkName == "Coffee")
+            if (drinkName == DrinkFactory.COFFEE)
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -232,8 +247,8 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
                 _selectedDrink = _factory.create(drinkName);
             }
 
-            _factory.addSugar(_selectedDrink, SugarAmount);
-            _factory.addMilk(_selectedDrink, MilkAmount);
+            _selectedDrink = _factory.addMilk(_selectedDrink, MilkAmount);
+            _selectedDrink = _factory.addSugar(_selectedDrink, SugarAmount);
 
             if (_selectedDrink != null)
             {

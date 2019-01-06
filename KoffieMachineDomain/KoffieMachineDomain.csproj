@@ -45,6 +45,7 @@
     <Compile Include="CapuccinoDrinkDecorator.cs" />
     <Compile Include="ChocolateDeluxeDrinkDecorator.cs" />
     <Compile Include="ChocolateDrinkDecorator.cs" />
+    <Compile Include="CoffeeChocDrinkDecorator.cs" />
     <Compile Include="CoffeeDrinkDecorator.cs" />
     <Compile Include="Drink.cs" />
     <Compile Include="DrinkDecorator.cs" />
@@ -52,11 +53,14 @@
     <Compile Include="EspressoDrinkDecorator.cs" />
     <Compile Include="IDrink.cs" />
     <Compile Include="IPayMethod.cs" />
+    <Compile Include="IrishCoffeeDrinkDecorator.cs" />
+    <Compile Include="ItalianCoffeeDrinkDecorator.cs" />
     <Compile Include="MilkDrinkDecorator.cs" />
     <Compile Include="PayByCardMethod.cs" />
     <Compile Include="PayByCoinMethod.cs" />
     <Compile Include="PayMethodFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpanishCoffeeDrinkDecorator.cs" />
     <Compile Include="Strength.cs" />
     <Compile Include="SugarDrinkDecorator.cs" />
     <Compile Include="TeaDrinkDecorator.cs" />

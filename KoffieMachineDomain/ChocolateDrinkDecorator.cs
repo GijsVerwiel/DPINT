@@ -22,7 +22,6 @@ namespace KoffieMachineDomain
         {
             base.LogDrinkMaking(log);
             log.Add("Filling with hot chocolate...");
-            log.Add($"Finished making {Name}");
         }
     }
 }
