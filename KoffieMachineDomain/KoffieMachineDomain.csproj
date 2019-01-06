@@ -64,7 +64,6 @@
     <Compile Include="Strength.cs" />
     <Compile Include="SugarDrinkDecorator.cs" />
     <Compile Include="TeaDrinkDecorator.cs" />
-    <Compile Include="TeaDrinkDecoratorAdapter.cs" />
     <Compile Include="WienerMelangeDrinkDecorator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

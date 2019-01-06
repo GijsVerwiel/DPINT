@@ -12,7 +12,7 @@ namespace KoffieMachineDomain
 
         public double getNewAmount()
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
         public double getRemainingPriceToPay()

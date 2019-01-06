@@ -56,11 +56,13 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         public RelayCommand PayByCardCommand => new RelayCommand(() =>
         {
             PayDrinkByCard();
+            FinishDrink();
         });
 
         public ICommand PayByCoinCommand => new RelayCommand<double>(coinValue =>
         {
             PayDrinkByCoins(coinValue);
+            FinishDrink();
         });
 
         public void PayDrinkByCard()
@@ -75,15 +77,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 
                 LogText.Add($"Inserted {insertedMoney.ToString("C", CultureInfo.CurrentCulture)}, Remaining: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}.");
                 RaisePropertyChanged(() => PaymentCardRemainingAmount);
-            }
-
-            if (_selectedDrink != null && RemainingPriceToPay == 0)
-            {
-                _selectedDrink.LogDrinkMaking(LogText);
-                LogText.Add($"Finished making {_selectedDrink.Name}");
-                LogText.Add("------------------");
-                _selectedDrink = null;
-            }
+            }            
         }
 
         public void PayDrinkByCoins(double insertedMoney)
@@ -91,11 +85,15 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             _payFactory.getPayMethod("Coin").Pay(insertedMoney, RemainingPriceToPay);
             RemainingPriceToPay = _payFactory.getPayMethod("Coin").getRemainingPriceToPay();
 
-            LogText.Add($"Inserted {insertedMoney.ToString("C", CultureInfo.CurrentCulture)}, Remaining: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}.");
+            LogText.Add($"Inserted {insertedMoney.ToString("C", CultureInfo.CurrentCulture)}, Remaining: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}.");            
+        }
 
+        public void FinishDrink()
+        {
             if (_selectedDrink != null && RemainingPriceToPay == 0)
             {
                 _selectedDrink.LogDrinkMaking(LogText);
+                LogText.Add($"Finished making {_selectedDrink.Name}");
                 LogText.Add("------------------");
                 _selectedDrink = null;
             }
@@ -189,7 +187,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             if (_selectedDrink != null)
             {
                 RemainingPriceToPay = _selectedDrink.GetPrice() + SugarDrinkDecorator.SugarPrice;
-                if (_selectedDrink.Name == DrinkFactory.CAPUCCINO || _selectedDrink.Name == DrinkFactory.ESPRESSO || _selectedDrink.Name == DrinkFactory.COFFEE)
+                if (_selectedDrink.Name == DrinkFactory.CAPUCCINO || _selectedDrink.Name == DrinkFactory.ESPRESSO || _selectedDrink.Name == DrinkFactory.COFFEE || _selectedDrink.Name == DrinkFactory.TEA)
                 {
                     LogText.Add($"Selected {_selectedDrink.Name} with sugar, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
                 }

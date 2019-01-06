@@ -12,5 +12,16 @@ namespace KoffieMachineDomain
         {
             drink.Name = "Chocolate Deluxe";
         }
+
+        public override double GetPrice()
+        {
+            return base.GetPrice() + 0.7;
+        }
+
+        public override void LogDrinkMaking(ICollection<string> log)
+        {
+            base.LogDrinkMaking(log);
+            log.Add("Filling with hot deluxe chocolate...");
+        }
     }
 }

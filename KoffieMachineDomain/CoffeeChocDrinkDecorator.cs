@@ -13,15 +13,14 @@ namespace KoffieMachineDomain
 
         public override double GetPrice()
         {
-            return base.GetPrice() + 0.9;
+            return base.GetPrice() + 0.5;
         }
 
         public override void LogDrinkMaking(ICollection<string> log)
         {
             base.LogDrinkMaking(log);
             log.Add($"Setting coffee strength to {_drinkStrength}.");
-            log.Add("Adding a little whiskey...");
-            log.Add("Adding cream...");
+            log.Add("Adding hot chocolate...");
         }
     }
 }
