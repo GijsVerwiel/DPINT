@@ -24,6 +24,7 @@ namespace KoffieMachineDomain
         public const string ITALIAN_COFFEE = "Italian Coffee";
         public const string COFFEE_CHOC = "Coffee Choc";
 
+        public static readonly List<string> DrinksWithCoffeeStrength = new List<string>() { CAPUCCINO, COFFEE, COFFEE_CHOC, IRISH_COFFEE, ITALIAN_COFFEE, SPANISH_COFFEE };
         public IDrink create(string name)
         {
             IDrink drink = new Drink();

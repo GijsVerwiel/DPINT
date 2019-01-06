@@ -147,7 +147,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         public ICommand DrinkCommand => new RelayCommand<string>((drinkName) =>
         {
             _selectedDrink = null;
-            if (drinkName == DrinkFactory.CAPUCCINO || drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.COFFEE_CHOC || drinkName == DrinkFactory.IRISH_COFFEE || drinkName == DrinkFactory.SPANISH_COFFEE || drinkName == DrinkFactory.ITALIAN_COFFEE)               
+            if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))               
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -172,8 +172,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 
         public ICommand DrinkWithSugarCommand => new RelayCommand<string>((drinkName) =>
         {
-            //RemainingPriceToPay = 0;
-            if (drinkName == DrinkFactory.CAPUCCINO || drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.IRISH_COFFEE || drinkName == DrinkFactory.ITALIAN_COFFEE || drinkName == DrinkFactory.SPANISH_COFFEE)
+            if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -207,7 +206,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 
         public ICommand DrinkWithMilkCommand => new RelayCommand<string>((drinkName) =>
         {
-            if (drinkName == DrinkFactory.COFFEE || drinkName == DrinkFactory.CAPUCCINO)
+            if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
@@ -236,7 +235,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         {
             _selectedDrink = null;
             RemainingPriceToPay = 0;
-            if (drinkName == DrinkFactory.COFFEE)
+            if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
