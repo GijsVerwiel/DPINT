@@ -38,14 +38,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TeaAndChocoLibrary">
+      <HintPath>..\TeaAndChocoLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Amount.cs" />
     <Compile Include="CafeAuLaitDrinkDecorator.cs" />
     <Compile Include="CapuccinoDrinkDecorator.cs" />
-    <Compile Include="ChocolateDeluxeDrinkDecorator.cs" />
-    <Compile Include="ChocolateDrinkDecorator.cs" />
-    <Compile Include="CoffeeChocDrinkDecorator.cs" />
+    <Compile Include="ChocolateDeluxeDrinkAdapter.cs" />
+    <Compile Include="ChocolateDrinkAdapter.cs" />
     <Compile Include="CoffeeDrinkDecorator.cs" />
     <Compile Include="Drink.cs" />
     <Compile Include="DrinkDecorator.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="SpanishCoffeeDrinkDecorator.cs" />
     <Compile Include="Strength.cs" />
     <Compile Include="SugarDrinkDecorator.cs" />
-    <Compile Include="TeaDrinkDecorator.cs" />
+    <Compile Include="TeaDrinkAdapter.cs" />
     <Compile Include="WienerMelangeDrinkDecorator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

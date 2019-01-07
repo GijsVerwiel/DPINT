@@ -6,22 +6,22 @@ using System.Threading.Tasks;
 
 namespace KoffieMachineDomain
 {
-    public class ChocolateDrinkDecorator : DrinkDecorator
+    public class TeaDrinkAdapter : DrinkDecorator
     {
-        public ChocolateDrinkDecorator(IDrink drink) : base(drink)
+        public TeaDrinkAdapter(IDrink drink, string name) : base(drink)
         {
-            drink.Name = "Chocolate";
+            drink.Name = name + " Tea";
         }
 
         public override double GetPrice()
         {
-            return base.GetPrice() + 0.5;
+            return TeaAndChocoLibrary.Tea.Price;
         }
 
         public override void LogDrinkMaking(ICollection<string> log)
         {
             base.LogDrinkMaking(log);
-            log.Add("Filling with hot chocolate...");
+            log.Add("Filling with hot water...");
         }
     }
 }

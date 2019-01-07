@@ -117,7 +117,7 @@
                         <TextBlock>Café au Lait</TextBlock>
                     </Button>
                 </WrapPanel>
-                <WrapPanel Orientation="Horizontal">
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Command="{Binding DrinkWithSugarCommand}" CommandParameter="Irish Coffee" Style="{StaticResource DrinkButton}">
                         <TextBlock>Irish Coffee</TextBlock>
                     </Button>
@@ -126,9 +126,6 @@
                     </Button>
                     <Button Command="{Binding DrinkWithSugarCommand}" CommandParameter="Italian Coffee" Style="{StaticResource DrinkButton}">
                         <TextBlock>Italian Coffee</TextBlock>
-                    </Button>
-                    <Button Command="{Binding DrinkCommand}" CommandParameter="Coffee Choc" Style="{StaticResource DrinkButton}">
-                        <TextBlock>Coffee Choc</TextBlock>
                     </Button>
                 </WrapPanel>
                 
@@ -144,7 +141,11 @@
                 </Button>
             </StackPanel>
             <Separator />
-            <Label Content="Tea" FontWeight="Bold"/>
+            <WrapPanel Orientation="Horizontal">
+                <Label Content="Tea" FontWeight="Bold" Width="100" />
+                <ComboBox ItemsSource="{Binding AvailableTeaBlends}" SelectedItem="{Binding SelectedTeaBlend}" />
+            </WrapPanel>
+            
             <StackPanel Orientation="Horizontal" Name="TeaPanel" HorizontalAlignment="Center" Margin="5">
                 <Button Command="{Binding DrinkCommand}" CommandParameter="Tea" Style="{StaticResource DrinkButton}">
                     <TextBlock>Tea</TextBlock>

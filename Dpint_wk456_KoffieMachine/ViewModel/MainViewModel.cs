@@ -22,6 +22,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             _coffeeStrength = Strength.Normal;
             _sugarAmount = Amount.Normal;
             _milkAmount = Amount.Normal;
+            SelectedTeaBlend = AvailableTeaBlends[0];
 
             LogText = new ObservableCollection<string>();
             LogText.Add("Starting up...");
@@ -50,6 +51,19 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         {
             get { return _selectedDrink?.GetPrice(); }
         }
+
+        public List<string> AvailableTeaBlends
+        {
+            get { return DrinkFactory.TeaBlendNames; }
+        }
+
+        private string _selectedTeaBlend;
+        public string SelectedTeaBlend
+        {
+            get { return _selectedTeaBlend; }
+            set { _selectedTeaBlend = value; RaisePropertyChanged("SelectedTeaBlend"); }
+        }
+
         #endregion Drink properties to bind to
 
         #region Payment
@@ -151,6 +165,10 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
+            else if (drinkName.Contains(DrinkFactory.TEA))
+            {
+                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend);
+            }
             else
             {
                 _selectedDrink = _factory.create(drinkName);
@@ -176,6 +194,10 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             {
                 _selectedDrink = _factory.create(drinkName, CoffeeStrength);
             }
+            else if (drinkName.Contains(DrinkFactory.TEA))
+            {
+                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend);
+            }
             else
             {
                 _selectedDrink = _factory.create(drinkName);
@@ -186,13 +208,13 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             if (_selectedDrink != null)
             {
                 RemainingPriceToPay = _selectedDrink.GetPrice() + SugarDrinkDecorator.SugarPrice;
-                if (_selectedDrink.Name == DrinkFactory.CAPUCCINO || _selectedDrink.Name == DrinkFactory.ESPRESSO || _selectedDrink.Name == DrinkFactory.COFFEE || _selectedDrink.Name == DrinkFactory.TEA)
+                if (DrinkFactory.ExtraSpecialties.Contains(_selectedDrink.Name))
                 {
-                    LogText.Add($"Selected {_selectedDrink.Name} with sugar, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
+                    LogText.Add($"Selected {_selectedDrink.Name}, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
                 }
                 else
                 {
-                    LogText.Add($"Selected {_selectedDrink.Name}, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");
+                    LogText.Add($"Selected {_selectedDrink.Name} with sugar, price: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}");                    
                 }
                 RaisePropertyChanged(() => RemainingPriceToPay);
                 RaisePropertyChanged(() => SelectedDrinkName);

@@ -24,17 +24,23 @@ namespace KoffieMachineDomain
         public const string ITALIAN_COFFEE = "Italian Coffee";
         public const string COFFEE_CHOC = "Coffee Choc";
 
+        private static TeaAndChocoLibrary.TeaBlendRepository _teaBlendRepository = new TeaAndChocoLibrary.TeaBlendRepository();        
+        public static readonly List<string> TeaBlendNames = _teaBlendRepository.BlendNames.ToList();
+
         public static readonly List<string> DrinksWithCoffeeStrength = new List<string>() { CAPUCCINO, COFFEE, COFFEE_CHOC, IRISH_COFFEE, ITALIAN_COFFEE, SPANISH_COFFEE };
+        public static readonly List<string> ExtraSpecialties = new List<string>() { IRISH_COFFEE, ITALIAN_COFFEE, SPANISH_COFFEE };
+
         public IDrink create(string name)
-        {
+        {            
             IDrink drink = new Drink();
 
-            if (name == TEA) { return new TeaDrinkDecorator(drink); }
             if (name == CAFE_AU_LAIT) { return new CafeAuLaitDrinkDecorator(drink); }
-            if (name == CHOCOLATE_DELUXE) { return new ChocolateDeluxeDrinkDecorator(drink); }
-            if (name == CHOCOLATE) { return new ChocolateDrinkDecorator(drink); }
+            if (name == CHOCOLATE_DELUXE) { return new ChocolateDeluxeDrinkAdapter(drink); }
+            if (name == CHOCOLATE) { return new ChocolateDrinkAdapter(drink); }
             if (name == ESPRESSO) { return new EspressoDrinkDecorator(drink); }
             if (name == WIENER_MELANGE) { return new WienerMelangeDrinkDecorator(drink); }
+
+            if (name.Contains(TEA)) { return new TeaDrinkAdapter(drink, name); }
 
             else { return null; }
         }
@@ -47,10 +53,18 @@ namespace KoffieMachineDomain
             if (name == CAPUCCINO) { return new CapuccinoDrinkDecorator(drink, drinkStrength); }
             if (name == SPANISH_COFFEE) { return new SpanishCoffeeDrinkDecorator(drink, drinkStrength); }
             if (name == ITALIAN_COFFEE) { return new ItalianCoffeeDrinkDecorator(drink, drinkStrength); }
-            if (name == COFFEE_CHOC) { return new CoffeeChocDrinkDecorator(drink, drinkStrength); }
             if (name == COFFEE) { return new CoffeeDrinkDecorator(drink, drinkStrength); }
 
-            else { return null; }
+            return null; 
+        }
+
+        public IDrink create(string name, string selectedBlend)
+        {
+            IDrink drink = new Drink();
+
+            if (name == TEA) { return new TeaDrinkAdapter(drink, selectedBlend); }
+
+            return null;
         }
 
         public IDrink addSugar(IDrink drink, Amount sugarAmount)
