@@ -42,8 +42,6 @@ namespace KoffieMachineDomain
 
             if (name.Contains(TEA)) { drink = new TeaDrinkAdapter(drink, name); }
 
-            if (ExtraSpecialties.Contains(drink.Name)) { drink = new CreamDecorator(drink); }
-
             if (sugarAmount != Amount.None) { drink = new SugarDrinkDecorator(drink, sugarAmount); }
             
             if (milkAmount != Amount.None) { drink = new MilkDrinkDecorator(drink, milkAmount); }
@@ -60,10 +58,10 @@ namespace KoffieMachineDomain
         {
             IDrink drink = new Drink();
 
-            if (name == IRISH_COFFEE) { drink = new IrishCoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == IRISH_COFFEE) { drink = new IrishCoffeeDrinkDecorator(drink, drinkStrength); drink = new WhiskeyDecorator(drink); }
             if (name == CAPUCCINO) { drink = new CapuccinoDrinkDecorator(drink, drinkStrength); }
-            if (name == SPANISH_COFFEE) { drink = new SpanishCoffeeDrinkDecorator(drink, drinkStrength); }
-            if (name == ITALIAN_COFFEE) { drink = new ItalianCoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == SPANISH_COFFEE) { drink = new SpanishCoffeeDrinkDecorator(drink, drinkStrength); drink = new CognacDecorator(drink); drink = new CointreauDecorator(drink); }
+            if (name == ITALIAN_COFFEE) { drink = new ItalianCoffeeDrinkDecorator(drink, drinkStrength); drink = new AmarettoDecorator(drink); }
             if (name == COFFEE) { drink = new CoffeeDrinkDecorator(drink, drinkStrength); }
 
             if (ExtraSpecialties.Contains(drink.Name)) { drink = new CreamDecorator(drink); }
