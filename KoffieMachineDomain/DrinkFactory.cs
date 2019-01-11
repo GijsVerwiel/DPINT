@@ -24,57 +24,74 @@ namespace KoffieMachineDomain
         public const string ITALIAN_COFFEE = "Italian Coffee";
         public const string COFFEE_CHOC = "Coffee Choc";
 
-        private static TeaAndChocoLibrary.TeaBlendRepository _teaBlendRepository = new TeaAndChocoLibrary.TeaBlendRepository();        
+        private static TeaAndChocoLibrary.TeaBlendRepository _teaBlendRepository = new TeaAndChocoLibrary.TeaBlendRepository();
         public static readonly List<string> TeaBlendNames = _teaBlendRepository.BlendNames.ToList();
 
         public static readonly List<string> DrinksWithCoffeeStrength = new List<string>() { CAPUCCINO, COFFEE, COFFEE_CHOC, IRISH_COFFEE, ITALIAN_COFFEE, SPANISH_COFFEE };
         public static readonly List<string> ExtraSpecialties = new List<string>() { IRISH_COFFEE, ITALIAN_COFFEE, SPANISH_COFFEE };
 
-        public IDrink create(string name)
-        {            
-            IDrink drink = new Drink();
-
-            if (name == CAFE_AU_LAIT) { return new CafeAuLaitDrinkDecorator(drink); }
-            if (name == CHOCOLATE_DELUXE) { return new ChocolateDeluxeDrinkAdapter(drink); }
-            if (name == CHOCOLATE) { return new ChocolateDrinkAdapter(drink); }
-            if (name == ESPRESSO) { return new EspressoDrinkDecorator(drink); }
-            if (name == WIENER_MELANGE) { return new WienerMelangeDrinkDecorator(drink); }
-
-            if (name.Contains(TEA)) { return new TeaDrinkAdapter(drink, name); }
-
-            else { return null; }
-        }
-
-        public IDrink create(string name, Strength drinkStrength)
+        public IDrink create(string name, Amount sugarAmount, Amount milkAmount)
         {
             IDrink drink = new Drink();
 
-            if (name == IRISH_COFFEE) { return new IrishCoffeeDrinkDecorator(drink, drinkStrength); }
-            if (name == CAPUCCINO) { return new CapuccinoDrinkDecorator(drink, drinkStrength); }
-            if (name == SPANISH_COFFEE) { return new SpanishCoffeeDrinkDecorator(drink, drinkStrength); }
-            if (name == ITALIAN_COFFEE) { return new ItalianCoffeeDrinkDecorator(drink, drinkStrength); }
-            if (name == COFFEE) { return new CoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == CAFE_AU_LAIT) { drink = new CafeAuLaitDrinkDecorator(drink); }
+            if (name == CHOCOLATE_DELUXE) { drink = new ChocolateDeluxeDrinkAdapter(drink); }
+            if (name == CHOCOLATE) { drink = new ChocolateDrinkAdapter(drink); }
+            if (name == ESPRESSO) { drink = new EspressoDrinkDecorator(drink); }
+            if (name == WIENER_MELANGE) { drink = new WienerMelangeDrinkDecorator(drink); }
 
-            return null; 
+            if (name.Contains(TEA)) { drink = new TeaDrinkAdapter(drink, name); }
+
+            if (ExtraSpecialties.Contains(drink.Name)) { drink = new CreamDecorator(drink); }
+
+            if (sugarAmount != Amount.None) { drink = new SugarDrinkDecorator(drink, sugarAmount); }
+            
+            if (milkAmount != Amount.None) { drink = new MilkDrinkDecorator(drink, milkAmount); }
+
+
+            if (drink.Name == null)
+            {
+                return null;
+            }
+            return drink;
         }
 
-        public IDrink create(string name, string selectedBlend)
+        public IDrink create(string name, Strength drinkStrength, Amount sugarAmount, Amount milkAmount)
         {
             IDrink drink = new Drink();
 
-            if (name == TEA) { return new TeaDrinkAdapter(drink, selectedBlend); }
+            if (name == IRISH_COFFEE) { drink = new IrishCoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == CAPUCCINO) { drink = new CapuccinoDrinkDecorator(drink, drinkStrength); }
+            if (name == SPANISH_COFFEE) { drink = new SpanishCoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == ITALIAN_COFFEE) { drink = new ItalianCoffeeDrinkDecorator(drink, drinkStrength); }
+            if (name == COFFEE) { drink = new CoffeeDrinkDecorator(drink, drinkStrength); }
 
-            return null;
+            if (ExtraSpecialties.Contains(drink.Name)) { drink = new CreamDecorator(drink); }
+
+            if (sugarAmount != Amount.None) { drink = new SugarDrinkDecorator(drink, sugarAmount); }
+
+            if (milkAmount != Amount.None) { drink = new MilkDrinkDecorator(drink, milkAmount); }
+
+            if (drink.Name == null)
+            {
+                return null;
+            }
+            return drink;
         }
 
-        public IDrink addSugar(IDrink drink, Amount sugarAmount)
+        public IDrink create(string name, string selectedBlend, Amount sugarAmount)
         {
-            return new SugarDrinkDecorator(drink, sugarAmount);
-        }
+            IDrink drink = new Drink();
 
-        public IDrink addMilk(IDrink drink, Amount milkAmount)
-        {
-            return new MilkDrinkDecorator(drink, milkAmount);
+            if (name == TEA) { drink = new TeaDrinkAdapter(drink, selectedBlend); }
+
+            if (sugarAmount != Amount.None) { drink = new SugarDrinkDecorator(drink, sugarAmount); }
+
+            if (drink.Name == null)
+            {
+                return null;
+            }
+            return drink;
         }
     }
 }

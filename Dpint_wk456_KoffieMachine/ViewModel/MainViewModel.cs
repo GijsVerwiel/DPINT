@@ -157,15 +157,15 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             _selectedDrink = null;
             if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))               
             {
-                _selectedDrink = _factory.create(drinkName, CoffeeStrength);
+                _selectedDrink = _factory.create(drinkName, CoffeeStrength, Amount.None, Amount.None);
             }
             else if (drinkName.Contains(DrinkFactory.TEA))
             {
-                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend);
+                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend, Amount.None);
             }
             else
             {
-                _selectedDrink = _factory.create(drinkName);
+                _selectedDrink = _factory.create(drinkName, Amount.None, Amount.None);
             }
 
             if (_selectedDrink != null)
@@ -186,18 +186,16 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         {
             if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
-                _selectedDrink = _factory.create(drinkName, CoffeeStrength);
+                _selectedDrink = _factory.create(drinkName, CoffeeStrength, SugarAmount, Amount.None);
             }
             else if (drinkName.Contains(DrinkFactory.TEA))
             {
-                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend);
+                _selectedDrink = _factory.create(drinkName, _selectedTeaBlend, SugarAmount);
             }
             else
             {
-                _selectedDrink = _factory.create(drinkName);
+                _selectedDrink = _factory.create(drinkName, SugarAmount, Amount.None);
             }
-
-            _selectedDrink = _factory.addSugar(_selectedDrink, SugarAmount);
 
             if (_selectedDrink != null)
             {
@@ -224,14 +222,12 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         {
             if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
-                _selectedDrink = _factory.create(drinkName, CoffeeStrength);
+                _selectedDrink = _factory.create(drinkName, CoffeeStrength, Amount.None, MilkAmount);
             }
             else
             {
-                _selectedDrink = _factory.create(drinkName);
+                _selectedDrink = _factory.create(drinkName, Amount.None, MilkAmount);
             }
-
-            _selectedDrink = _factory.addMilk(_selectedDrink, MilkAmount);
 
             if (_selectedDrink != null)
             {
@@ -253,15 +249,12 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             RemainingPriceToPay = 0;
             if (DrinkFactory.DrinksWithCoffeeStrength.Contains(drinkName))
             {
-                _selectedDrink = _factory.create(drinkName, CoffeeStrength);
+                _selectedDrink = _factory.create(drinkName, CoffeeStrength, SugarAmount, MilkAmount);
             }
             else
             {
-                _selectedDrink = _factory.create(drinkName);
+                _selectedDrink = _factory.create(drinkName, SugarAmount, MilkAmount);
             }
-
-            _selectedDrink = _factory.addMilk(_selectedDrink, MilkAmount);
-            _selectedDrink = _factory.addSugar(_selectedDrink, SugarAmount);
 
             if (_selectedDrink != null)
             {

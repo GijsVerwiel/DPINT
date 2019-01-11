@@ -21,7 +21,6 @@ namespace KoffieMachineDomain
             base.LogDrinkMaking(log);
             log.Add($"Setting coffee strength to {_drinkStrength}.");
             log.Add("Adding cointreau and congnac...");
-            log.Add("Adding cream...");
         }
     }
 }

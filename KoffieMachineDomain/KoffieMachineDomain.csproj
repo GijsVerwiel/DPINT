@@ -49,6 +49,7 @@
     <Compile Include="ChocolateDeluxeDrinkAdapter.cs" />
     <Compile Include="ChocolateDrinkAdapter.cs" />
     <Compile Include="CoffeeDrinkDecorator.cs" />
+    <Compile Include="CreamDecorator.cs" />
     <Compile Include="Drink.cs" />
     <Compile Include="DrinkDecorator.cs" />
     <Compile Include="DrinkFactory.cs" />
