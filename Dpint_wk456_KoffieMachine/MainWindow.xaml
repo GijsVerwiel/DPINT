@@ -143,7 +143,7 @@
             <Separator />
             <WrapPanel Orientation="Horizontal">
                 <Label Content="Tea" FontWeight="Bold" Width="30" />
-                <Label Content="- choose blend:" Width="90" />
+                <Label Content="- choose blend:" Width="95" />
                 <ComboBox ItemsSource="{Binding AvailableTeaBlends}" SelectedItem="{Binding SelectedTeaBlend}" />
             </WrapPanel>
             
