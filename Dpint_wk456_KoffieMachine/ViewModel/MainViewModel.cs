@@ -11,7 +11,6 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private Dictionary<string, double> _cashOnCards;
         public ObservableCollection<string> LogText { get; private set; }
 
         private DrinkFactory _factory;
@@ -26,18 +25,13 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
 
             LogText = new ObservableCollection<string>();
             LogText.Add("Starting up...");
-            LogText.Add("Done, what would you like to drink?");
-
-            _cashOnCards = new Dictionary<string, double>();
-            _cashOnCards["Arjen"] = 5.0;
-            _cashOnCards["Bert"] = 3.5;
-            _cashOnCards["Chris"] = 7.0;
-            _cashOnCards["Daan"] = 6.0;
-            PaymentCardUsernames = new ObservableCollection<string>(_cashOnCards.Keys);
-            SelectedPaymentCardUsername = PaymentCardUsernames[0];
+            LogText.Add("Done, what would you like to drink?");            
 
             _factory = new DrinkFactory();
             _payFactory = new PayMethodFactory();
+
+            PaymentCardUsernames = _payFactory.getUserNames();
+            SelectedPaymentCardUsername = PaymentCardUsernames[0];
         }
 
         #region Drink properties to bind to
@@ -83,10 +77,10 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
         {
             if (_selectedDrink != null)
             {
-                double insertedMoney = _cashOnCards[SelectedPaymentCardUsername];
+                double insertedMoney = _payFactory.CashOnCards[SelectedPaymentCardUsername];
 
-                _payFactory.getPayMethod("Card").Pay(_cashOnCards[SelectedPaymentCardUsername], RemainingPriceToPay);
-                _cashOnCards[SelectedPaymentCardUsername] = _payFactory.getPayMethod("Card").getNewAmount();
+                _payFactory.getPayMethod("Card").Pay(_payFactory.CashOnCards[SelectedPaymentCardUsername], RemainingPriceToPay);
+                _payFactory.CashOnCards[SelectedPaymentCardUsername] = _payFactory.getPayMethod("Card").getNewAmount();
                 RemainingPriceToPay = _payFactory.getPayMethod("Card").getRemainingPriceToPay();
 
                 LogText.Add($"Inserted {insertedMoney.ToString("C", CultureInfo.CurrentCulture)}, Remaining: {RemainingPriceToPay.ToString("C", CultureInfo.CurrentCulture)}.");
@@ -113,7 +107,7 @@ namespace Dpint_wk456_KoffieMachine.ViewModel
             }
         }
 
-        public double PaymentCardRemainingAmount => _cashOnCards.ContainsKey(SelectedPaymentCardUsername ?? "") ? _cashOnCards[SelectedPaymentCardUsername] : 0;
+        public double PaymentCardRemainingAmount => _payFactory.CashOnCards.ContainsKey(SelectedPaymentCardUsername ?? "") ? _payFactory.CashOnCards[SelectedPaymentCardUsername] : 0;
 
         public ObservableCollection<string> PaymentCardUsernames { get; set; }
         private string _selectedPaymentCardUsername;
